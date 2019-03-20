@@ -1,4 +1,8 @@
+
 package medi_assistbe.mongobd;
+/**
+ * ApiToken class to manage Tokens.
+ */
 
 import java.io.Serializable;
 
