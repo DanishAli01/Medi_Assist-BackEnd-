@@ -7,5 +7,7 @@ public interface PersonalProfileRepository extends MongoRepository<PersonalProfi
     public PersonalProfile findBymobile(String mobile);
 
     public PersonalProfile findByDateofbirth(String dateofbirth);
+
+    //
 }
 
