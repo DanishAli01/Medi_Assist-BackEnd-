@@ -1,8 +1,20 @@
 package medi_assistbe.mongobd;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -10,6 +22,21 @@ public class MongoDBRestController {
 
     @Autowired
     PersonalProfileRepository personalProfileRepository;
+
+    @Autowired
+    ClientRepository clientRepository;
+
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public ResponseEntity<ApiToken> login(@RequestBody Client client) {
+
+        ResponseEntity<ApiToken> token =  new ResponseEntity<>(
+                new ApiToken(Jwts.builder().setSubject(client.getClientName()).claim("roles", "user")
+                        .setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "123#&*zcvAWEE999").compact()),
+                HttpStatus.OK);
+        client.setTokengiven(token.getBody().getToken());
+        clientRepository.save(client);
+        return token;
+    }
 
     @RequestMapping(value = "/profile",method = RequestMethod.GET)
     public List<PersonalProfile> getprofile(){
