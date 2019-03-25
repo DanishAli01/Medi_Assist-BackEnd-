@@ -15,6 +15,8 @@ public class MongoDBRestController {
 
     @Autowired
     PersonalProfileRepository personalProfileRepository;
+    @Autowired
+    MedicalHistoryRepository medicalHistoryRepository;
 
     @Autowired
     ClientRepository clientRepository;
@@ -56,6 +58,29 @@ public class MongoDBRestController {
     public String deleteByid(@PathVariable("id") String id){
         personalProfileRepository.deleteById(id);
         return "Profile : " +id+" deleted Successfully";
+    }
+
+    @RequestMapping(value = "/profile/medicalhistroy",method = RequestMethod.GET)
+    public List<MedicalHistory> getmedicalHistory(){
+       return medicalHistoryRepository.findAll();
+    }
+
+    @RequestMapping(value = "/profile/medicalhistroy/addbyid",method = RequestMethod.POST)
+    public String medicalHistoryaddition(@RequestBody MedicalHistory medicalHistory,@RequestParam(value = "id",required = true) String id){
+        medicalHistoryRepository.deleteAll();
+        medicalHistory.setId(id);
+        medicalHistoryRepository.save(medicalHistory);
+        return "Medical History Created Successfully";
+    }
+
+    @RequestMapping(value = "/profile/medicalhistroy/illness/{illness}",method = RequestMethod.GET)
+    public MedicalHistory findByillness(@PathVariable("illness") String illness){
+        return medicalHistoryRepository.findByillness(illness);
+    }
+
+    @RequestMapping(value = "/profile/medicalhistroy/id/{id}",method = RequestMethod.GET)
+    public MedicalHistory findBymedicalId(@PathVariable("id")String Id){
+        return medicalHistoryRepository.findByillness(Id);
     }
 
 
