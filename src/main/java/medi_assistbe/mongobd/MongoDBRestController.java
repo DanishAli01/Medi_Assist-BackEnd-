@@ -21,16 +21,24 @@ public class MongoDBRestController {
     @Autowired
     ClientRepository clientRepository;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResponseEntity<ApiToken> login(@RequestBody Client client) {
+//    @RequestMapping(value = "/login",method = RequestMethod.POST)
+//    public ResponseEntity<ApiToken> login(@RequestBody Client client) {
+//
+//        ResponseEntity<ApiToken> token =  new ResponseEntity<>(
+//                new ApiToken(Jwts.builder().setSubject(client.getClientName()).claim("roles", "user")
+//                        .setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "123#&*zcvAWEE999").compact()),
+//                HttpStatus.OK);
+//        client.setTokengiven(token.getBody().getToken());
+//        clientRepository.save(client);
+//        return token;
+//    }
 
-        ResponseEntity<ApiToken> token =  new ResponseEntity<>(
-                new ApiToken(Jwts.builder().setSubject(client.getClientName()).claim("roles", "user")
-                        .setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "123#&*zcvAWEE999").compact()),
-                HttpStatus.OK);
-        client.setTokengiven(token.getBody().getToken());
-        clientRepository.save(client);
-        return token;
+    @RequestMapping(value = "DB/clearall",method = RequestMethod.GET)
+    private String clearall(){
+        personalProfileRepository.deleteAll();
+        medicalHistoryRepository.deleteAll();
+        clientRepository.deleteAll();
+        return "Done";
     }
 
     @RequestMapping(value = "/profile",method = RequestMethod.GET)
@@ -40,6 +48,7 @@ public class MongoDBRestController {
 
     @RequestMapping(value = "/profile",method = RequestMethod.POST)
     public String createprofile(@RequestBody PersonalProfile personalProfile){
+        givetoken(personalProfile);
         personalProfileRepository.save(personalProfile);
         return "Profile created Successfully";
     }
@@ -82,6 +91,18 @@ public class MongoDBRestController {
     public MedicalHistory findBymedicalId(@PathVariable("id")String Id){
         return medicalHistoryRepository.findByillness(Id);
     }
+
+    public ResponseEntity<ApiToken> givetoken(PersonalProfile personalProfile) {
+
+        ResponseEntity<ApiToken> token =  new ResponseEntity<>(
+                new ApiToken(Jwts.builder().setSubject(personalProfile.getId()).claim("roles", "user")
+                        .setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "123#&*zcvAWEE999").compact()),
+                HttpStatus.OK);
+        personalProfile.setTokengiven(token.getBody().getToken());
+        return token;
+    }
+
+
 
 
 }

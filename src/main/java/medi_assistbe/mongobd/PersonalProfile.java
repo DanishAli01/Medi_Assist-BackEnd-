@@ -98,6 +98,14 @@ public class PersonalProfile {
     public String getId() {
         return id;
     }
+
+    public void setTokengiven(String tokengiven) {
+        this.tokengiven = tokengiven;
+    }
+
+    public String getTokengiven() {
+        return tokengiven;
+    }
     @Id
     private String id;
     private String eircode;
@@ -109,5 +117,6 @@ public class PersonalProfile {
     private String gender;
     private String dateofbirth;
     private String address;
+    private String tokengiven;
 
 }
