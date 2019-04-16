@@ -8,6 +8,6 @@ public interface PersonalProfileRepository extends MongoRepository<PersonalProfi
 
     public PersonalProfile findByDateofbirth(String dateofbirth);
 
-    //
+
 }
 

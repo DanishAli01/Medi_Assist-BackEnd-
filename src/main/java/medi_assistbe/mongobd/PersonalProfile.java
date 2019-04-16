@@ -2,20 +2,25 @@ package medi_assistbe.mongobd;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.List;
+
 public class PersonalProfile {
+
     @Override
     public String toString() {
         return "PersonalProfile{" +
-                "Name='" + Name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dateofbirth='" + dateofbirth + '\'' +
-                ", address='" + address + '\'' +
-                ", id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", eircode='" + eircode + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", email='" + email + '\'' +
                 ", home='" + home + '\'' +
                 ", bloodgroup='" + bloodgroup + '\'' +
+                ", Name='" + Name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateofbirth='" + dateofbirth + '\'' +
+                ", address='" + address + '\'' +
+                ", tokengiven='" + tokengiven + '\'' +
+                ", medicalHistories=" + medicalHistories +
                 '}';
     }
 
@@ -106,6 +111,26 @@ public class PersonalProfile {
     public String getTokengiven() {
         return tokengiven;
     }
+
+    public void setMedicalHistories(MedicalHistory medicalHistories) {
+        medicalHistories.setId(this.id);
+        this.medicalHistories.add(medicalHistories);
+    }
+
+    public List<MedicalHistory> getMedicalHistories() {
+        return medicalHistories;
+    }
+
+    public void setVitals(Vitals vitals) {
+        vitals.setId(this.id);
+        this.vitals.add(vitals);
+    }
+
+
+    public List<Vitals> getVitals() {
+        return vitals;
+    }
+
     @Id
     private String id;
     private String eircode;
@@ -118,5 +143,7 @@ public class PersonalProfile {
     private String dateofbirth;
     private String address;
     private String tokengiven;
+    private  List<Vitals> vitals;
+    private List<MedicalHistory> medicalHistories;
 
 }
