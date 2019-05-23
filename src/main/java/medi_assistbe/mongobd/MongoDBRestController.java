@@ -1,19 +1,17 @@
 package medi_assistbe.mongobd;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 public class MongoDBRestController {
@@ -93,9 +91,18 @@ public class MongoDBRestController {
         return medicalHistoryRepository.findByillness(illness);
     }
 
+    @RequestMapping(value = "/profile/email/{email}",method = RequestMethod.PATCH)
+    public String findByEmail(@PathVariable("email") String email,@RequestParam(value = "updatedemail",required = true) String updatedemail){
+        PersonalProfile p =  personalProfileRepository.findByEmail(email);
+        p.setEmail(updatedemail);
+        personalProfileRepository.save(p);
+        return "Email Updated";
+    }
+
+
     @RequestMapping(value = "/profile/medicalhistroy/id/{id}",method = RequestMethod.GET)
     public MedicalHistory findBymedicalId(@PathVariable("id")String Id){
-        return medicalHistoryRepository.findByillness(Id);
+       return medicalHistoryRepository.findByillness(Id);
     }
 
     public ResponseEntity<ApiToken> givetoken(PersonalProfile personalProfile) {
@@ -106,6 +113,21 @@ public class MongoDBRestController {
                 HttpStatus.OK);
         personalProfile.setTokengiven(token.getBody().getToken());
         return token;
+    }
+
+//    @GetMapping("/index")
+//    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+//        model.addAttribute("name", name);
+//        return "index";
+//    }
+
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    ModelAndView
+    index()
+    {
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("name", "Danish");
+        return mav;
     }
 
 
