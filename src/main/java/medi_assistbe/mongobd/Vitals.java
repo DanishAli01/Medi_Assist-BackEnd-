@@ -1,7 +1,5 @@
 package medi_assistbe.mongobd;
 
-import org.springframework.data.annotation.Id;
-
 public class Vitals {
 
     private  String vitalbloodpressure;
@@ -11,15 +9,25 @@ public class Vitals {
     private String vitalbodytemperature;
     private String vitalheartrate;
     private String vitalrespiratoryrate;
-    @Id
-    private String id;
+    private String time;
 
-    public String getId() {
-        return id;
+
+    public String getTime() {
+        return time;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    private String map;
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
     }
 
     public String getVitalbloodpressure() {

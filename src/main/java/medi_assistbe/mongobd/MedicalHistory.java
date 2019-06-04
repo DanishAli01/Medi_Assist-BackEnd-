@@ -1,7 +1,5 @@
 package medi_assistbe.mongobd;
 
-import org.springframework.data.annotation.Id;
-
 public class MedicalHistory {
 
     public String getIllness() {
@@ -28,12 +26,12 @@ public class MedicalHistory {
         this.details = details;
     }
 
-    public String getId() {
-        return id;
+    public String getMap() {
+        return map;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMap(String map) {
+        this.map = map;
     }
 
     @Override
@@ -44,8 +42,8 @@ public class MedicalHistory {
                 ", details='" + details + '\'' +
                 '}';
     }
-    @Id
-    private String id;
+
+    private String map;
     private String illness;
     private String date;
     private String details;

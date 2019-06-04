@@ -18,10 +18,16 @@ public class PersonalProfile {
                 ", Name='" + Name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateofbirth='" + dateofbirth + '\'' +
-                ", address='" + address + '\'' +
                 ", tokengiven='" + tokengiven + '\'' +
-                ", medicalHistories=" + medicalHistories +
                 '}';
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setName(String name) {
@@ -36,9 +42,6 @@ public class PersonalProfile {
         this.dateofbirth = dateofbirth;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public void setEircode(String eircode) {
         this.eircode = eircode;
@@ -72,9 +75,6 @@ public class PersonalProfile {
         return dateofbirth;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
     public String getEircode() {
         return eircode;
@@ -96,9 +96,6 @@ public class PersonalProfile {
         return bloodgroup;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getId() {
         return id;
@@ -112,24 +109,7 @@ public class PersonalProfile {
         return tokengiven;
     }
 
-    public void setMedicalHistories(MedicalHistory medicalHistories) {
-        medicalHistories.setId(this.id);
-        this.medicalHistories.add(medicalHistories);
-    }
 
-    public List<MedicalHistory> getMedicalHistories() {
-        return medicalHistories;
-    }
-
-    public void setVitals(Vitals vitals) {
-        vitals.setId(this.id);
-        this.vitals.add(vitals);
-    }
-
-
-    public List<Vitals> getVitals() {
-        return vitals;
-    }
 
     @Id
     private String id;
@@ -141,9 +121,8 @@ public class PersonalProfile {
     private String Name;
     private String gender;
     private String dateofbirth;
-    private String address;
     private String tokengiven;
-    private  List<Vitals> vitals;
-    private List<MedicalHistory> medicalHistories;
+    private String password;
+
 
 }
